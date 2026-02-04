@@ -11,7 +11,12 @@ function Layout(){
   );
 
  return(
-   <div className="min-h-screen dark:bg-black bg-white">
+   <div className="
+   min-h-screen
+   bg-gradient-to-tr
+   from-[#faf4e1] via-[#fcedbb] to-[#fce28b]
+   dark:from-[#020617] dark:via-[#020617] dark:to-[#020617]
+   transition-all duration-300" >
     <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} /> 
     <div className="flex flex-col mx-auto p-4 min-h-screen">
      <Header theme={theme} setTheme={setTheme} />

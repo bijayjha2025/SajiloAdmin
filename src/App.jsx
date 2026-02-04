@@ -1,5 +1,5 @@
 
-import { Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './Components/Layout';
 import Dashboard from './Pages/Dashboard';
 import Products from './Pages/Products';

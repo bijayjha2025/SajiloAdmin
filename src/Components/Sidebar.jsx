@@ -18,20 +18,22 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
    <div className="fixed inset-0 z-40 bg-black/50 md:hidden" onClick={() => setIsOpen(false)} />
   )}
 
-  <aside className={` fixed left-0 top-0 z-50 h-screen w-64 p-4 flex flex-col bg-slate-900 text-slate-200 transition-transform duration-300 
+  <aside className={` fixed left-0 top-0 z-40 h-screen w-64 flex flex-col bg-gradient-to-b from-[#f7ab1e] to-[#f2d13d] dark:from-[#111] dark:to-[#1a1a1a] text-gray-900 dark:text-gray-200 transition-transform duration-300 
   ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 `} >
 
-   <div className="flex justify-between items-center mb-8">
-    <h1 className="text-2xl font-bold text-amber-400">SajiloAdmin</h1>
-    <button className="md:hidden text-gray-400 hover:text-white" onClick={() => setIsOpen(false)}><X size={22} /></button>
+   <div className="flex justify-between items-center px-6 py-4">
+    <h1 className="text-xl font-bold tracking-wide">Sajilo<span className="text-white dark:text-amber-400">Admin</span></h1>
+
+    <button className="md:hidden text-gray-700 dark:text-gray-400" onClick={() => setIsOpen(false)}><X size={22} /></button>
    </div>
 
-   <nav className="flex-1">
-    <ul className="space-y-2">
+   <nav className="flex-1 px-3">
+    <ul className="space-y-1">
     {links.map((link) => (
      <li key={link.path}>
 
-      <NavLink to={link.path} className={({ isActive }) => `flex items-center gap-3 p-3 rounded-lg transition-colors ${isActive ? "bg-amber-400 text-slate-900" : "text-slate-400 hover:bg-amber-400/10 hover:text-amber-300" }`} >
+      <NavLink to={link.path} className={({ isActive }) => `flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors
+        ${isActive ? "bg-white/80 text-gray-900" : "text-gray-800 dark:text-gray-300 hover:bg-white/40 dark:hover:bg-white/10" }`} >
          <link.icon size={18} />
       <span className="text-sm font-medium">{link.name}</span>
       </NavLink>
@@ -40,8 +42,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     </ul>
    </nav>
    
-   <div className="border-t border-slate-800 pt-4">
-    <p className="text-xs text-slate-500 text-center">&copy; 2026 SajiloAdmin</p>
+   <div className="px-6 py-4 border-t border-white/30 dark:border-gray-800">
+    <p className="text-xs text-gray-700 dark:text-gray-500 text-center">&copy; 2026 SajiloAdmin</p>
    </div>
    </aside>
   </>

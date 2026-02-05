@@ -17,10 +17,13 @@ function Layout(){
    from-[#faf4e1] via-[#fcedbb] to-[#fce28b]
    dark:from-[#020617] dark:via-[#020617] dark:to-[#020617]
    transition-all duration-300" >
+
     <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} /> 
-    <div className="flex flex-col mx-auto p-4 min-h-screen">
-     <Header theme={theme} setTheme={setTheme} />
-     <main className="flex-1 p-6 md:ml-64 overflow-y-auto transition-all duration-300">
+
+    <div className="ml-0 md:ml-64 flex flex-col min-h-screen">
+     <Header theme={theme} setTheme={setTheme} ToggleSidebar = {() => setIsSidebarOpen(!isSidebarOpen)} />
+     
+     <main className="pt-16 p-6">
       <Outlet />
      </main>
     </div>

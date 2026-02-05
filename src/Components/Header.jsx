@@ -32,7 +32,7 @@ const Header = ( { theme, setTheme, ToggleSidebar }) => {
       </div>
     
      <div className='leading-tight'>
-      <p className='text-sm font-medium text-gray-700'>Admin</p>
+      <p className='text-sm font-medium text-gray-500'>Admin</p>
       <p className='text-xs text-gray-500'>admin@sajilo.com</p>
      </div>
   </div>

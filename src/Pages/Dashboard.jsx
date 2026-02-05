@@ -54,50 +54,57 @@ const Dashboard =() => {
     <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Overview of your business</p>
    </div>
 
-   <button
-            onClick={() => setIsDark(!isDark)}
-            className={`p-4 rounded-xl transition-all duration-500 transform hover:scale-110 active:scale-95 ${
-              isDark 
-                ? 'bg-gradient-to-br from-slate-800 to-slate-700 hover:from-slate-700 hover:to-slate-600 text-yellow-400 shadow-lg shadow-slate-900/50' 
-                : 'bg-gradient-to-br from-white to-orange-50 hover:from-orange-50 hover:to-yellow-50 text-orange-600 border border-orange-200 shadow-lg shadow-orange-200/50'
-            }`}
-          >
-            <div className="transition-transform duration-500 transform hover:rotate-180">
-              {isDark ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
-            </div>
-          </button>
-        </div>
-
-   <div className="relative">
-    <div ref={containerRef} className="flex gap-8 items-end overflow-x-hidden py-12">
-     {stats.map((stat, index) => (
-      <div key={index} onClick={() => setActiveIndex(index)} className="cursor-pointer">
-       <Statscard {...stat} isActive={index === activeIndex} />
-      </div>
-     ))}
+   <button onClick={() => setIsDark(!isDark)} className={`p-4 rounded-xl transition-all duration-500 transform hover:scale-110 active:scale-95 ${ isDark 
+      ? 'bg-gradient-to-br from-slate-800 to-slate-700 hover:from-slate-700 hover:to-slate-600 text-yellow-400 shadow-lg shadow-slate-900/50' 
+      : 'bg-gradient-to-br from-white to-orange-50 hover:from-orange-50 hover:to-yellow-50 text-orange-600 border border-orange-200 shadow-lg shadow-orange-200/50'
+    }`} >
+    <div className="transition-transform duration-500 transform hover:rotate-180">
+     {isDark ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
     </div>
+   </button>
+  </div>
 
-    {activeIndex > 0 && (
-      <button onClick={handlePrev} className="absolute top-1/2 left-4 -translate-y-1/2 bg-slate-800/80 hover:bg-slate-700 p-3 rounded-full text-white backdrop-blur-sm transition-all shadow-lg z-10">
+  <div className="relative">
+   <div ref={containerRef} className="flex gap-8 items-end overflow-x-hidden py-16" style={{ perspective: '1000px' }}>
+    {stats.map((stat, index) => (
+    <div key={index} onClick={() => setActiveIndex(index)} className="cursor-pointer transition-transform duration-500 hover:scale-105">
+     <Statscard {...stat} isActive={index === activeIndex} />
+    </div>
+   ))}
+   </div>
+
+   {activeIndex > 0 && (
+    <button onClick={handlePrev} className={`absolute top-1/2 left-4 -translate-y-1/2 p-4 rounded-full transition-all duration-300 shadow-xl z-10 group 
+      
+      ${ isDark
+    ? 'bg-gradient-to-br from-slate-800 to-slate-700 hover:from-orange-600 hover:to-orange-500 text-white'
+    : 'bg-gradient-to-br from-white to-orange-50 hover:from-orange-500 hover:to-orange-600 text-slate-700 hover:text-white border border-slate-300 hover:border-orange-500' }`} >
+
        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-      </button>
+    </button>
     )}
 
     {activeIndex < stats.length - 1 && (
-     <button className="absolute top-1/2 right-4 -translate-y-1/2 bg-slate-800/80 hover:bg-slate-700 p-3 rounded-full text-white backdrop-blur-sm transition-all shadow-lg z-10" onClick={handleNext} >
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+     <button className={`absolute top-1/2 right-4 -translate-y-1/2 p-4 rounded-full transition-all duration-300 shadow-xl z-10 group 
+      ${ isDark
+      ? 'bg-gradient-to-br from-slate-800 to-slate-700 hover:from-orange-600 hover:to-orange-500 text-white'
+      : 'bg-gradient-to-br from-white to-orange-50 hover:from-orange-500 hover:to-orange-600 text-slate-700 hover:text-white border border-slate-300 hover:border-orange-500' }`} onClick={handleNext} >
+      
+       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
      </button>
     )}
     </div>
 
     <div className="flex justify-center gap-2">
      {stats.map((_, idx) => (
-      <button key={idx} onClick={() => setActiveIndex(idx)} className={`h-2 rounded-full transition-all ${ idx === activeIndex ? 'w-8 bg-blue-500' : 'w-2 bg-slate-600 hover:bg-slate-500' }`} />
+      <button key={idx} onClick={() => setActiveIndex(idx)} className={`rounded-full transition-all duration-500 transform 
+        ${ idx === activeIndex 
+         ? 'w-10 h-3 bg-gradient-to-r from-orange-500 to-yellow-500 scale-110' 
+         : isDark ? 'w-3 h-3 bg-slate-600 hover:bg-slate-500 hover:scale-125' : 'w-3 h-3 bg-slate-300 hover:bg-orange-300 hover:scale-125' }`} />
      ))}
     </div>
    </div>
    </div>
-
 );
 }
 

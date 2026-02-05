@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Statscard from "../Components/Statscard";
-import { Users, ShoppingCart, DollarSign, TrendingUp, ListPlus, Clock } from "lucide-react";
+import { Users, ShoppingCart, DollarSign, TrendingUp, ListPlus, Clock, Sun, Moon } from "lucide-react";
 
 const Dashboard =() => {
   const stats = [
@@ -13,6 +13,7 @@ const Dashboard =() => {
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isDark, setIsDark] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -44,11 +45,28 @@ const Dashboard =() => {
   }
 
  return(
-  <div className="space-y-6 py-10 bg-[#f0f5bf] min-h-screen">
-    <div className="px-6">
+  <div className={`min-h-screen transition-colors duration-500 ${ isDark ? 'bg-slate-950' : 'bg-gradient-to-br from-orange-50 to-yellow-50' }`}>
+   <div className="space-y-8 py-10">
+    <div className="px-6 flex items-center justify-between animate-fade-in">
+
+   <div>
     <h1 className="text-3xl font-bold text-slate-500">Dashboard</h1>
     <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Overview of your business</p>
    </div>
+
+   <button
+            onClick={() => setIsDark(!isDark)}
+            className={`p-4 rounded-xl transition-all duration-500 transform hover:scale-110 active:scale-95 ${
+              isDark 
+                ? 'bg-gradient-to-br from-slate-800 to-slate-700 hover:from-slate-700 hover:to-slate-600 text-yellow-400 shadow-lg shadow-slate-900/50' 
+                : 'bg-gradient-to-br from-white to-orange-50 hover:from-orange-50 hover:to-yellow-50 text-orange-600 border border-orange-200 shadow-lg shadow-orange-200/50'
+            }`}
+          >
+            <div className="transition-transform duration-500 transform hover:rotate-180">
+              {isDark ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+            </div>
+          </button>
+        </div>
 
    <div className="relative">
     <div ref={containerRef} className="flex gap-8 items-end overflow-x-hidden py-12">
@@ -77,6 +95,7 @@ const Dashboard =() => {
       <button key={idx} onClick={() => setActiveIndex(idx)} className={`h-2 rounded-full transition-all ${ idx === activeIndex ? 'w-8 bg-blue-500' : 'w-2 bg-slate-600 hover:bg-slate-500' }`} />
      ))}
     </div>
+   </div>
    </div>
 
 );

@@ -2,11 +2,13 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar  } from "recharts";
 import { Users, PieChart as PieChartIcon } from "lucide-react";
 import { userGrowthData } from "../Data/mockData.jsx";
+import GlassCard from "../Components/GlassCard.jsx";
 
 const Analytics =() =>{
     return(
     <div className="space-y-6">
      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <GlassCard className="p-6">
       <div className="flex items-center justify-between mb-6">
        <div>
         <h2 className='text-lg font-semibold text-gray-800 dark:text-white'>User Growth</h2>
@@ -26,9 +28,10 @@ const Analytics =() =>{
          <Line type="monotone" dataKey="users" stroke="#8b5cf6" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
          <Line type="monotone" dataKey="active" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
         </LineChart>
-      </ResponsiveContainer>
-
+       </ResponsiveContainer>
       </div>
+      </GlassCard>
+
      </div>
     </div>
     );

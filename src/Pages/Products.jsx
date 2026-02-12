@@ -84,14 +84,18 @@ const Products =() =>{
        </tr>
       ))}
      </tbody>
-    </table>
-   </div>
+     </table>
+    </div>
+
+    <div className='px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between'>
+     <p className='text-sm text-gray-500 dark:text-gray-400'>Showing <span className='font-medium'>1</span> to <span className='font-medium'>{filteredProducts.length}</span> of <span className='font-medium'>19</span> results</p>
+     <div className='flex gap-2'>
+      <button className='px-3 py-1 rounded-lg border border-gray-200 dark:border-gray-700 text-sm text-gray-600 dark:text-gray-300 disabled:opacity-50'>Previous</button>
+      <button className='px-3 py-1 rounded-lg border border-gray-200 dark:border-gray-700 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800'>Next</button>
+     </div>
+    </div>
   </GlassCard>
-  
  </div>
-
-
  );    
 }
-
 export default Products;

@@ -32,3 +32,18 @@ export const productsData = [
     { id: 5, name: "4K HD Monitor", category: "Electronics", price: 619.99, stock: 31, status: "Low Stock" },
 ];
 
+export const salesData = [
+    { name: "Jan", revenue: 4200, profit: 2400 },
+    { name: "Feb", revenue: 3300, profit: 1398 },
+    { name: "Mar", revenue: 2050, profit: 1900 },
+    { name: "Apr", revenue: 2750, profit: 1908 },
+    { name: "May", revenue: 1800, profit: 1480 },
+    { name: "Jun", revenue: 2590, profit: 2200 },
+    { name: "Jul", revenue: 3480, profit: 3000 },
+    { name: "Aug", revenue: 4240, profit: 4100 },
+    { name: "Sep", revenue: 3700, profit: 3350 },
+    { name: "Oct", revenue: 5150, profit: 4400 },
+    { name: "Nov", revenue: 4900, profit: 4500 },
+    { name: "Dec", revenue: 6300, profit: 5500 },
+];
+

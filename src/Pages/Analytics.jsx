@@ -1,7 +1,7 @@
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar  } from "recharts";
-import { Users, PieChart as PieChartIcon } from "lucide-react";
-import { userGrowthData, categoryData } from "../Data/mockData.jsx";
+import { Users, TrendingUp, PieChart as PieChartIcon, X } from "lucide-react";
+import { userGrowthData, categoryData, conversionData } from "../Data/mockData.jsx";
 import GlassCard from "../Components/GlassCard.jsx";
 
 const Analytics =() =>{
@@ -57,9 +57,46 @@ const Analytics =() =>{
          </ResponsiveContainer>
         </div>
 
+        <div className='flex justify-center gap-4 mt-4 flex-wrap'>
+         {categoryData.map((item, index) => (
+          <div key={index} className='flex items-center gap-2'>
+           <div className='w-3 h-3 rounded-full' style={{ backgroundColor: item.color }}></div>
+            <span className='text-sm text-gray-600 dark:text-gray-400'>{item.name}</span>
+          </div>
+         ))}
+        </div>
       </GlassCard>
-
      </div>
+
+     <GlassCard className="p-6">
+      <div className="flex items-center justify-between mb-6">
+       <div>
+        <h2 className='text-lg font-semibold text-gray-800 dark:text-white'>Traffic Sources</h2>
+        <p className='text-sm text-gray-500 dark:text-gray-400'>Where your users are coming from</p>
+       </div>
+
+       <div className='p-2 bg-amber-100 dark:bg-amber-500/20 rounded-lg text-amber-600 dark:text-amber-400'>
+        <TrendingUp size={20} />
+       </div>
+      </div>
+
+      <div className='h-[300px] w-full'>
+       <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={conversionData}>
+         <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.1} />
+          <XAxis dataKey="name" stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
+          <YAxis stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
+
+          <Tooltip cursor={{ fill: 'rgba(255,255,255,0.1)' }} contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} itemStyle={{ color: '#1f2937' }} />
+           <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]}>
+            {conversionData.map((entry, index) => (
+             <Cell key={`cell-${index}`} fill={entry.color} />
+            ))}
+           </Bar>
+        </BarChart>
+       </ResponsiveContainer>
+      </div>
+     </GlassCard>
     </div>
     );
 }

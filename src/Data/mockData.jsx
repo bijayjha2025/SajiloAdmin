@@ -16,3 +16,10 @@ export const categoryData = [
     { name: "Wearables", value: 2110, color: "#fa9907" },
     { name: "Accessories", value: 1600, color: "#59f20c" },
 ];
+
+export const conversionData = [
+    { name: "Social Media", value: 550, color: "#0abcf2" },
+    { name: "Organic Search", value: 370, color: "#03fc0b" },
+    { name: "Direct", value: 220, color: "#fcad03" },
+    { name: "Referral", value: 180, color: "#fc2c03" },
+];

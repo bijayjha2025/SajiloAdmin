@@ -1,6 +1,6 @@
-import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Area, LineChart, Line, BarChart, Bar, Cell } from "recharts";
+import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Area, LineChart, Line, BarChart, Bar, Cell, PieChart, Pie } from "recharts";
 import GlassCard from "../Components/GlassCard";
-import { salesData, userGrowthData, conversionData } from "../Data/mockData";
+import { salesData, userGrowthData, conversionData, categoryData } from "../Data/mockData";
 
 const Charts = () => {
   return(
@@ -68,14 +68,23 @@ const Charts = () => {
      </div>
     </GlassCard>
 
-
-
-
-
+    <GlassCard className='p-6'>
+     <h2 className='text-lg font-semibold text-gray-800 dark:text-white mb-4'>Category Distribution (Pie)</h2>
+     <div className='h-[300px] w-full flex items-center justify-center'>
+      <ResponsiveContainer width="100%" height="100%">
+       <PieChart>
+        <Pie data={categoryData} cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={5} dataKey="value">
+         {categoryData.map((entry, index) => (
+         <Cell key={`cell-${index}`} fill={entry.color} />
+         ))}
+        </Pie>
+        <Tooltip contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '8px', border: 'none' }} itemStyle={{ color: '#1f2937' }} />
+       </PieChart> 
+      </ResponsiveContainer>
+     </div>
+    </GlassCard>
    </div>
-
   </div>
-
  ); 
 }
 

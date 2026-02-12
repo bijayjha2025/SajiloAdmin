@@ -23,3 +23,12 @@ export const conversionData = [
     { name: "Direct", value: 220, color: "#fcad03" },
     { name: "Referral", value: 180, color: "#fc2c03" },
 ];
+
+export const productsData = [
+    { id: 1, name: "Premium Wireless Headphones", category: "Electronics", price: 419.00, stock: 170, status: "In Stock" },
+    { id: 2, name: "Office Chair", category: "Furniture", price: 540.00, stock: 35, status: "Low Stock" },
+    { id: 3, name: "Gaming Mechanical Keyboard", category: "Electronics", price: 165.00, stock: 0, status: "Out of Stock" },
+    { id: 4, name: "Smart Fitness Watch", category: "Wearables", price: 200.50, stock: 97, status: "In Stock" },
+    { id: 5, name: "4K HD Monitor", category: "Electronics", price: 619.99, stock: 31, status: "Low Stock" },
+];
+

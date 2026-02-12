@@ -8,3 +8,11 @@ export const userGrowthData = [
     { name: "Aug", users: 2470, active: 1904 },
     { name: "Sep", users: 2000, active: 2750 },
 ];
+
+
+export const categoryData = [
+    { name: "Electronics", value: 4300, color: "#0f26fa" },
+    { name: "Furniture", value: 3670, color: "#db1807" },
+    { name: "Wearables", value: 2110, color: "#fa9907" },
+    { name: "Accessories", value: 1600, color: "#59f20c" },
+];

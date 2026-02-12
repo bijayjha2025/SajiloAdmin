@@ -1,7 +1,7 @@
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar  } from "recharts";
 import { Users, PieChart as PieChartIcon } from "lucide-react";
-import { userGrowthData } from "../Data/mockData.jsx";
+import { userGrowthData, categoryData } from "../Data/mockData.jsx";
 import GlassCard from "../Components/GlassCard.jsx";
 
 const Analytics =() =>{
@@ -30,6 +30,33 @@ const Analytics =() =>{
         </LineChart>
        </ResponsiveContainer>
       </div>
+      </GlassCard>
+
+      <GlassCard className="p-6">
+       <div className="flex items-center justify-between mb-6">
+        <div>
+         <h2 className='text-lg font-semibold text-gray-800 dark:text-white'>Category Distribution</h2>
+         <p className='text-sm text-gray-500 dark:text-gray-400'>Sales By Category</p>
+        </div>
+
+        <div className='p-2 bg-emerald-100 dark:bg-emerald-500/20 rounded-lg text-emerald-600 dark:text-emerald-400'>
+         <PieChartIcon size={20} />
+        </div>
+       </div>
+       
+       <div className='h-[300px] w-full flex items-center justify-center'>
+        <ResponsiveContainer width="100%" height="100%">
+         <PieChart>
+          <Pie data={categoryData} cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={5} dataKey="value" >
+           {categoryData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.color} />
+           ))}
+          </Pie>
+          <Tooltip contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '8px', border: 'none' }} itemStyle={{ color: '#1f2937' }}/>
+          </PieChart>
+         </ResponsiveContainer>
+        </div>
+
       </GlassCard>
 
      </div>

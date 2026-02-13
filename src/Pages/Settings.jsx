@@ -1,6 +1,7 @@
 
 import { useState } from "react";
-import { User, Mail, Bell } from 'lucide-react';
+import { User, Mail, Bell, Shield } from 'lucide-react';
+import GlassCard from "../Components/GlassCard";
 
 
 const Setting = () => {
@@ -14,6 +15,7 @@ const Setting = () => {
   <div className='max-w-4xl mx-auto space-y-6'>
    <h1 className='text-2xl font-bold text-gray-800 dark:text-white mb-6'>Settings</h1>
 
+   <GlassCard className="p-6">
    <div className='flex items-center gap-4 mb-6 border-b border-gray-200 dark:border-gray-700 pb-4'>
     <div className='p-2 bg-indigo-100 dark:bg-indigo-500/20 rounded-lg text-indigo-600 dark:text-indigo-400'>
      <User size={24} />
@@ -57,7 +59,9 @@ const Setting = () => {
      </div>
     </div>
    </div>
-
+   </GlassCard>
+   
+   <GlassCard className="p-6">
    <div className='flex items-center gap-4 mb-6 border-b border-gray-200 dark:border-gray-700 pb-4'>
     <div className='p-2 bg-amber-100 dark:bg-amber-500/20 rounded-lg text-amber-600 dark:text-amber-400'>
      <Bell size={24} />
@@ -87,10 +91,38 @@ const Setting = () => {
      </div>
     ))}
    </div>
-  
+   </GlassCard>
 
+   <GlassCard className="p-6">
+    <div className='flex items-center gap-4 mb-6 border-b border-gray-200 dark:border-gray-700 pb-4'>
+     <div className='p-2 bg-emerald-100 dark:bg-emerald-500/20 rounded-lg text-emerald-600 dark:text-emerald-400'>
+      <Shield size={24} />
+     </div>
 
+     <div>
+      <h2 className='text-lg font-semibold text-gray-800 dark:text-white'>Security</h2>
+      <p className='text-sm text-gray-500 dark:text-gray-400'>Ensure your account is secure</p>
+     </div>
+    </div>
 
+    <div className='flex items-center justify-between'>
+     <div>
+      <p className='font-medium text-gray-800 dark:text-white'>Two-Factor Authentication</p>
+      <p className='text-sm text-gray-500 dark:text-gray-400'>Add an extra layer of security to your account</p>
+     </div>
+     
+     <button className='px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors'>Enable 2FA</button>
+    </div>
+                
+    <div className='flex items-center justify-between mt-4'>
+     <div>
+      <p className='font-medium text-gray-800 dark:text-white'>Change Password</p>
+      <p className='text-sm text-gray-500 dark:text-gray-400'>Update your password regularly</p>
+     </div>
+                    
+     <button className='px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors'>Change</button>
+    </div>
+   </GlassCard>
   </div>
  );
 }

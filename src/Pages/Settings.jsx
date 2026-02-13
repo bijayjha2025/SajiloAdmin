@@ -1,15 +1,25 @@
 
 import { useState } from "react";
-import { User, Mail, Bell, Shield } from 'lucide-react';
+import { User, Mail, Bell, Shield, Save } from 'lucide-react';
 import GlassCard from "../Components/GlassCard";
+import { useToast } from "../Context/ToastContext";
 
 
 const Setting = () => {
+ const { addToast } = useToast();
  const [notifications, setNotifications] = useState({
     email: true,
     push: true,
     promotions: false,
  });
+
+ const handleSaveProfile = () => {
+  addToast('Profile updated successfully', 'success');
+ }
+
+ const handleSaveSecurity = () => {
+  addToast('Security settings updated', 'success');
+ }
 
  return(
   <div className='max-w-4xl mx-auto space-y-6'>
@@ -85,7 +95,13 @@ const Setting = () => {
        </div>
                             
        <label className='relative inline-flex items-center cursor-pointer'>
-        <input type="checkbox" checked={notifications[item.id]} onChange={() => setNotifications(prev => ({ ...prev, [item.id]: !prev[item.id] }))} className="sr-only peer" />
+        <input type="checkbox" checked={notifications[item.id]} onChange={() => {
+         setNotifications(prev => { 
+            const newState = ({...prev, [item.id] : !prev[item.id] });
+            addToast(`${item.label} ${newState[item.id] ? 'enabled' : 'disabled'}`, 'info');
+            return newState;
+         });
+      }} className="sr-only peer" />
         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-amber-300 dark:peer-focus:ring-amber-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-amber-500"></div>
       </label> 
      </div>

@@ -47,3 +47,11 @@ export const salesData = [
     { name: "Dec", revenue: 6300, profit: 5500 },
 ];
 
+export const recentOrders = [
+    { id: "#ORD-3210", customer: "Dipesh Khanal", product: "Premium Wireless Headphones", amount: 419.00, status: "Completed", date: "2024-03-10" },
+    { id: "#ORD-3211", customer: "Saugat Khatiwada", product: "Smart Fitness Watch", amount: 200.50, status: "Processing", date: "2024-03-10" },
+    { id: "#ORD-3212", customer: "Anil Adhikari", product: "Office Chair", amount: 540.00, status: "Shipped", date: "2024-03-09" },
+    { id: "#ORD-3213", customer: "Gaurab Khanal", product: "4K HD Monitor", amount: 619.99, status: "Completed", date: "2024-03-09" },
+    { id: "#ORD-3214", customer: "Sekum Limbu", product: "Gaming Mechanical Keyboard", amount: 165.00, status: "Cancelled", date: "2024-03-08" },
+];
+

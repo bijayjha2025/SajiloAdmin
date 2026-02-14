@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import Statscard from "../Components/Statscard";
-import { Users, ShoppingCart, DollarSign, TrendingUp, ListPlus, Clock, Sun, Moon } from "lucide-react";
+import { Users, ShoppingCart, DollarSign, TrendingUp, ListPlus, Clock, Sun, Moon, ArrowRight } from "lucide-react";
+import GlassCard from "../Components/GlassCard";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { salesData, recentOrders } from "../Data/mockData";
 
 const Dashboard =() => {
   const stats = [
@@ -103,7 +106,75 @@ const Dashboard =() => {
          : isDark ? 'w-3 h-3 bg-slate-600 hover:bg-slate-500 hover:scale-125' : 'w-3 h-3 bg-slate-300 hover:bg-orange-300 hover:scale-125' }`} />
      ))}
     </div>
-   </div>
+
+    <div className="px-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
+     <GlassCard className="lg:col-span-2 p-6">
+      <div className="flex items-center justify-between mb-6">
+       <h2 className="text-xl font-bold text-slate-700 dark:text-slate-200">Sales Overview</h2>
+       <button className="text-sm text-orange-500 hover:text-orange-600 font-medium">View Report</button>
+      </div>
+
+      <div className="h-[300px] w-full">
+       <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={salesData}>
+         <defs>
+          <linearGradient id="colorRevenueDashboard" x1="0" y1="0" x2="0" y2="1">
+           <stop offset="5%" stopColor="#f97316" stopOpacity={0.3} />
+           <stop offset="95%" stopColor="#f97316" stopOpacity={0} />
+          </linearGradient>
+         </defs>
+
+         <CartesianGrid strokeDasharray="3 3" stroke="#ccc" opacity={0.1} />
+          <XAxis dataKey="name" stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} />
+          <YAxis stroke="#6b7280" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value}`} />
+          <Tooltip contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} itemStyle={{ color: '#1f2937' }} />
+          <Area type="monotone" dataKey="revenue" stroke="#f97316" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenueDashboard)" />
+        </AreaChart>
+       </ResponsiveContainer>
+       </div>
+      </GlassCard>
+
+      <GlassCard className="p-6">
+       <div className="flex items-center justify-between mb-6">
+        <h2 className="text-xl font-bold text-slate-700 dark:text-slate-200">Recent Orders</h2>
+        <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-slate-500">
+         <ArrowRight size={20} />
+        </button>
+       </div>
+
+       <div className="space-y-4">
+       {recentOrders.map((order) => (
+        <div key={order.id} className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group cursor-pointer">
+         <div className="flex items-center gap-4">
+          <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold
+          ${order.status === 'Completed' ? 'bg-emerald-500' :
+            order.status === 'Processing' ? 'bg-blue-500' :
+            order.status === 'Shipped' ? 'bg-purple-500' : 'bg-rose-500'}`}>
+            {order.customer.charAt(0)}
+          </div>
+         
+         <div>
+          <h4 className="font-semibold text-slate-700 dark:text-slate-200">{order.customer}</h4>
+          <p className="text-xs text-slate-500">{order.product}</p>
+         </div>
+        </div>
+                  
+        <div className="text-right">
+         <p className="font-bold text-slate-700 dark:text-slate-300">${order.amount.toFixed(0)}</p>
+         <p className={`text-xs font-medium 
+          ${order.status === 'Completed' ? 'text-emerald-500' :
+            order.status === 'Processing' ? 'text-blue-500' :
+            order.status === 'Shipped' ? 'text-purple-500' : 'text-rose-500'}`}>
+            {order.status}
+          </p>
+         </div>
+        </div>
+        ))}
+       </div>
+      <button className="w-full mt-6 py-2 rounded-xl bg-orange-50 text-orange-600 hover:bg-orange-100 dark:bg-orange-500/10 dark:hover:bg-orange-500/20 transition-colors text-sm font-semibold">View All Orders</button>
+      </GlassCard>
+     </div>
+    </div>
    </div>
 );
 }

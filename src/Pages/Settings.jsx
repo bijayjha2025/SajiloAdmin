@@ -65,7 +65,9 @@ const Setting = () => {
      </div> 
                         
      <div className='pt-2'>
-      <button className='px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-medium shadow-md shadow-amber-500/20 transition-all'>Save Changes</button>
+      <button onClick={handleSaveProfile} className='px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-medium shadow-md shadow-amber-500/20 transition-all'>
+      <Save size={18} />
+      Save Changes</button>
      </div>
     </div>
    </div>
@@ -127,7 +129,7 @@ const Setting = () => {
       <p className='text-sm text-gray-500 dark:text-gray-400'>Add an extra layer of security to your account</p>
      </div>
      
-     <button className='px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors'>Enable 2FA</button>
+     <button onClick={handleSaveSecurity} className='px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors'>Enable 2FA</button>
     </div>
                 
     <div className='flex items-center justify-between mt-4'>
@@ -136,7 +138,7 @@ const Setting = () => {
       <p className='text-sm text-gray-500 dark:text-gray-400'>Update your password regularly</p>
      </div>
                     
-     <button className='px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors'>Change</button>
+     <button onClick={handleSaveSecurity} className='px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors'>Change</button>
     </div>
    </GlassCard>
   </div>

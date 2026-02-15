@@ -1,18 +1,40 @@
 import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Area, LineChart, Line, BarChart, Bar, Cell, PieChart, Pie } from "recharts";
+import { useState } from "react";
 import GlassCard from "../Components/GlassCard";
 import { salesData, userGrowthData, conversionData, categoryData } from "../Data/mockData";
 
 const Charts = () => {
+  const [timeRange, setTimeRange] = useState("All Year");
+
+  const filteredData = (() => {
+    switch (timeRange) {
+      case "Last 6 Months": return salesData.slice(-6);
+      case "Last 3 Months": return salesData.slice(-3);
+      default: return salesData;
+    }
+  })();
+
   return(
   <div className="space-y-6">
+   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
    <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-">Charts Gallery</h1>
+
+   <div className="bg-white dark:bg-slate-800 p-1 rounded-xl border border-gray-200 dark:border-gray-700 flex">
+    {["All Year", "Last 6 Months", "Last 3 Months"].map((range) => (
+    <button key={range} onClick={() => setTimeRange(range)} className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all ${timeRange === range ? "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400 shadow-sm"
+              : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"}`}>
+     {range}
+    </button>
+    ))}
+   </div>
+  </div>
 
    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <GlassCard className="p-6">
-     <h2 className='text-lg font-semibold text-gray-800 dark:text-white mb-4'>Revenue Trend (Area)</h2>
+     <h2 className='text-lg font-semibold text-gray-800 dark:text-white mb-4'>Revenue Trend ({timeRange})</h2>
      <div className="h-[300px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-       <AreaChart data={salesData}>
+       <AreaChart data={filteredData}>
 
         <defs>
          <linearGradient id="colorRevenue2" x1="0" y1="0" x2="0" y2="1">

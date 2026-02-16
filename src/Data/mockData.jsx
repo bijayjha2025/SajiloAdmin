@@ -30,6 +30,16 @@ export const productsData = [
     { id: 3, name: "Gaming Mechanical Keyboard", category: "Electronics", price: 165.00, stock: 0, status: "Out of Stock" },
     { id: 4, name: "Smart Fitness Watch", category: "Wearables", price: 200.50, stock: 97, status: "In Stock" },
     { id: 5, name: "4K HD Monitor", category: "Electronics", price: 619.99, stock: 31, status: "Low Stock" },
+    { id: 6, name: "Ergonomic Mouse", category: "Electronics", price: 49.99, stock: 200, status: "In Stock" },
+    { id: 7, name: "Standing Desk", category: "Furniture", price: 350.00, stock: 15, status: "Low Stock" },
+    { id: 8, name: "Noise Cancelling Earbuds", category: "Electronics", price: 129.00, stock: 85, status: "In Stock" },
+    { id: 9, name: "Running Shoes", category: "Wearables", price: 89.99, stock: 45, status: "In Stock" },
+    { id: 10, name: "Yoga Mat", category: "Accessories", price: 25.00, stock: 120, status: "In Stock" },
+    { id: 11, name: "Bluetooth Speaker", category: "Electronics", price: 79.99, stock: 60, status: "In Stock" },
+    { id: 12, name: "Laptop Stand", category: "Accessories", price: 35.00, stock: 20, status: "Low Stock" },
+    { id: 13, name: "Webcam 1080p", category: "Electronics", price: 55.00, stock: 10, status: "Low Stock" },
+    { id: 14, name: "USB-C Hub", category: "Accessories", price: 45.00, stock: 150, status: "In Stock" },
+    { id: 15, name: "Smart Scale", category: "Wearables", price: 60.00, stock: 0, status: "Out of Stock" },
 ];
 
 export const salesData = [

@@ -43,17 +43,41 @@ const Login = () => {
           <Mail className="h-5 w-5 text-gray-400 group-focus-within:text-amber-500 transition-colors"/>
          </div>
 
-         
+         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full pl-11 pr-4 py-3 bg-white/50 dark:bg-slate-800/50 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all dark:text-white" placeholder="name@company.com" required />
+        </div>
+       </div>
+
+       <div className="space-y-2">
+        <div className="flex justify-between items-center ml-1">
+         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+
+         <a href="#" className="text-xs font-medium text-amber-600 dark:text-amber-400 hover:text-amber-500">Forgot Password?</a>
         </div>
 
+        <div className="relative">
+         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+          <Lock className="h-5 w-5 text-gray-400 group-focus-within:text-amber-500 transition-colors"/>
+         </div>
+
+         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full pl-11 pr-4 py-3 bg-white/50 dark:bg-slate-800/50 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all dark:text-white" placeholder="••••••••" required />
+        </div>
        </div>
+
+       <button type="submit" disabled={isSubmitting} className="w-full flex items-center justify-center py-3 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-xl shadow-lg shadow-amber-500/30 transform transition-all hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none">
+        {isSubmitting ? 
+        ( <Loader className="animate-spin h-5 w-5" />) : 
+        ( <span className="flex items-center gap-2">Sign In <ArrowRight className="h-4 w-4" /></span>
+        )}
+       </button>
       </form>
+     </div>
 
+     <div className="px-8 py-4 bg-gray-50/50 dark:bg-slate-800/50 border-t border-gray-100 dark:border-gray-800 center">
+      <p className="text-sm text-gray-500 dark:text-gray-400 text-center">Don't have an account? <a href="#" className="text-amber-600 dark:text-amber-400 hover:underline">Contact Admin</a></p>
+     </div>
 
      </div>
      </div>
-     </div>
-
 
   );
 };

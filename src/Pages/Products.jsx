@@ -1,9 +1,10 @@
 import GlassCard from "../Components/GlassCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { productsData as initialProducts } from "../Data/mockData";
 import { Search, Filter, Plus, Edit, Trash2, Save, ChevronLeft, ChevronRight, ArrowUpDown, CheckSquare, Square } from "lucide-react";
 import { useToast } from "../Context/ToastContext";
 import Modal from "../Components/Modal";
+import { TableSkeleton } from "../Components/Skeleton";
 
 const Products =() =>{
  const [products, setProducts] = useState(initialProducts);
@@ -12,6 +13,12 @@ const Products =() =>{
 
  const [isModalOpen, setIsModalOpen] = useState(false);
  const [editingProduct, setEditingProduct] = useState(null);
+ const [loading, setLoading] = useState(true);
+
+ useEffect(() => {
+  const timer = setTimeout(() => setLoading(false), 1500);
+  return () => clearTimeout(timer);
+ }, []);
 
  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
  const [selectedItems, setSelectedItems] = useState([]);
@@ -159,6 +166,7 @@ const Products =() =>{
    </div>
   </div>
 
+  {loading ? <TableSkeleton /> : (
   <GlassCard className="overflow-hidden">
    <div className="overflow-x-auto">
     <table className="w-full">
@@ -254,6 +262,7 @@ const Products =() =>{
      </div>
     </div>
    </GlassCard>
+  )}
     
     <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={editingProduct ? "Edit Product" : "Add New Product"}>
      <form onSubmit={handleSubmit} className="space-y-4">

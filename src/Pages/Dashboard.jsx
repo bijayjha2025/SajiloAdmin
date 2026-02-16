@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, use } from "react";
 import Statscard from "../Components/Statscard";
 import { Users, ShoppingCart, DollarSign, TrendingUp, ListPlus, Clock, Sun, Moon, ArrowRight } from "lucide-react";
 import GlassCard from "../Components/GlassCard";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { salesData, recentOrders } from "../Data/mockData";
+import { CardSkeleton } from "../Components/Skeleton.jsx";
 
 const Dashboard =() => {
   const stats = [
@@ -17,7 +18,13 @@ const Dashboard =() => {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDark, setIsDark] = useState(false);
+  const [loading, setLoading] = useState(true);
   const containerRef = useRef(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if(containerRef.current) {
@@ -108,6 +115,7 @@ const Dashboard =() => {
     </div>
 
     <div className="px-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {loading ? <CardSkeleton /> : (
      <GlassCard className="lg:col-span-2 p-6">
       <div className="flex items-center justify-between mb-6">
        <h2 className="text-xl font-bold text-slate-700 dark:text-slate-200">Sales Overview</h2>
@@ -133,7 +141,9 @@ const Dashboard =() => {
        </ResponsiveContainer>
        </div>
       </GlassCard>
+      )}
 
+      {loading ? <CardSkeleton /> : (
       <GlassCard className="p-6">
        <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-bold text-slate-700 dark:text-slate-200">Recent Orders</h2>
@@ -173,6 +183,7 @@ const Dashboard =() => {
        </div>
       <button className="w-full mt-6 py-2 rounded-xl bg-orange-50 text-orange-600 hover:bg-orange-100 dark:bg-orange-500/10 dark:hover:bg-orange-500/20 transition-colors text-sm font-semibold">View All Orders</button>
       </GlassCard>
+      )}
      </div>
     </div>
    </div>

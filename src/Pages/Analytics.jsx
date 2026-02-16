@@ -3,11 +3,21 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { Users, TrendingUp, PieChart as PieChartIcon, X } from "lucide-react";
 import { userGrowthData, categoryData, conversionData } from "../Data/mockData.jsx";
 import GlassCard from "../Components/GlassCard.jsx";
+import { CardSkeleton } from "../Components/Skeleton.jsx";
+import { useState, useEffect } from "react";
 
 const Analytics =() =>{
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
     return(
     <div className="space-y-6">
      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {loading ? <CardSkeleton /> : (
       <GlassCard className="p-6">
       <div className="flex items-center justify-between mb-6">
        <div>
@@ -31,7 +41,9 @@ const Analytics =() =>{
        </ResponsiveContainer>
       </div>
       </GlassCard>
+      )}
 
+      {loading ? <CardSkeleton /> : (
       <GlassCard className="p-6">
        <div className="flex items-center justify-between mb-6">
         <div>
@@ -66,8 +78,10 @@ const Analytics =() =>{
          ))}
         </div>
       </GlassCard>
+      )}
      </div>
 
+    {loading ? <CardSkeleton /> : (
      <GlassCard className="p-6">
       <div className="flex items-center justify-between mb-6">
        <div>
@@ -79,7 +93,7 @@ const Analytics =() =>{
         <TrendingUp size={20} />
        </div>
       </div>
-
+     
       <div className='h-[300px] w-full'>
        <ResponsiveContainer width="100%" height="100%">
         <BarChart data={conversionData}>
@@ -97,6 +111,7 @@ const Analytics =() =>{
        </ResponsiveContainer>
       </div>
      </GlassCard>
+    )}
     </div>
     );
 }

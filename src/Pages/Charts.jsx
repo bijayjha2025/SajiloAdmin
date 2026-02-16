@@ -1,10 +1,17 @@
 import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Area, LineChart, Line, BarChart, Bar, Cell, PieChart, Pie } from "recharts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GlassCard from "../Components/GlassCard";
 import { salesData, userGrowthData, conversionData, categoryData } from "../Data/mockData";
+import { CardSkeleton } from "../Components/Skeleton.jsx";
 
 const Charts = () => {
   const [timeRange, setTimeRange] = useState("All Year");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredData = (() => {
     switch (timeRange) {
@@ -14,7 +21,7 @@ const Charts = () => {
     }
   })();
 
-  return(
+  return (
   <div className="space-y-6">
    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
    <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-">Charts Gallery</h1>
@@ -30,6 +37,7 @@ const Charts = () => {
   </div>
 
    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    {loading ? <CardSkeleton /> : (
     <GlassCard className="p-6">
      <h2 className='text-lg font-semibold text-gray-800 dark:text-white mb-4'>Revenue Trend ({timeRange})</h2>
      <div className="h-[300px] w-full">
@@ -52,7 +60,9 @@ const Charts = () => {
       </ResponsiveContainer>
      </div>
     </GlassCard>
-                    
+    )}
+
+    {loading ? <CardSkeleton /> : ( 
     <GlassCard className='p-6'>
      <h2 className='text-lg font-semibold text-gray-800 dark:text-white mb-4'>User Growth (Line)</h2>
      <div className='h-[300px] w-full'>
@@ -69,7 +79,9 @@ const Charts = () => {
       </ResponsiveContainer>
      </div>
     </GlassCard>
+    )}
 
+    {loading ? <CardSkeleton /> : (
     <GlassCard className='p-6'>
      <h2 className='text-lg font-semibold text-gray-800 dark:text-white mb-4'>Traffic Sources (Bar)</h2>
      <div className='h-[300px] w-full'>
@@ -89,7 +101,9 @@ const Charts = () => {
       </ResponsiveContainer>
      </div>
     </GlassCard>
+    )}
 
+    {loading ? <CardSkeleton /> : (
     <GlassCard className='p-6'>
      <h2 className='text-lg font-semibold text-gray-800 dark:text-white mb-4'>Category Distribution (Pie)</h2>
      <div className='h-[300px] w-full flex items-center justify-center'>
@@ -105,6 +119,7 @@ const Charts = () => {
       </ResponsiveContainer>
      </div>
     </GlassCard>
+    )}
    </div>
   </div>
  ); 

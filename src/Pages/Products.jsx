@@ -1,7 +1,7 @@
 import GlassCard from "../Components/GlassCard";
 import { useState } from "react";
 import { productsData as initialProducts } from "../Data/mockData";
-import { Search, Filter, Plus, Edit, Trash2, Save } from "lucide-react";
+import { Search, Filter, Plus, Edit, Trash2, Save, ChevronLeft, ChevronRight, ArrowUpDown, CheckSquare, Square } from "lucide-react";
 import { useToast } from "../Context/ToastContext";
 import Modal from "../Components/Modal";
 
@@ -12,6 +12,11 @@ const Products =() =>{
 
  const [isModalOpen, setIsModalOpen] = useState(false);
  const [editingProduct, setEditingProduct] = useState(null);
+
+ const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+ const [selectedItems, setSelectedItems] = useState([]);
+ const [currentPage, setCurrentPage] = useState(1);
+ const itemsPerPage = 6;
 
  const [formData, setFormData] = useState({
   name: "",
@@ -24,6 +29,64 @@ const Products =() =>{
  const filteredProducts = products.filter(product => 
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) || product.category.toLowerCase().includes(searchTerm.toLowerCase())
  );
+
+ const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (!sortConfig.key) return 0;
+
+    let aValue = a[sortConfig.key];
+    let bValue = b[sortConfig.key];
+
+    if (typeof aValue === 'string') {
+      aValue = aValue.toLowerCase();
+      bValue = bValue.toLowerCase();
+    }
+
+    if (aValue < bValue) {
+      return sortConfig.direction === 'asc' ? -1 : 1;
+    }
+    if (aValue > bValue) {
+      return sortConfig.direction === 'asc' ? 1 : -1;
+    }
+    return 0;
+  });
+
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+  const paginatedProducts = sortedProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleSort = (key) => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedItems.length === paginatedProducts.length) {
+      setSelectedItems([]);
+    } else {
+      setSelectedItems(paginatedProducts.map(p => p.id));
+    }
+  };
+
+  const toggleSelect = (id) => {
+    if (selectedItems.includes(id)) {
+      setSelectedItems(selectedItems.filter(item => item !== id));
+    } else {
+      setSelectedItems([...selectedItems, id]);
+    }
+  };
+
+  const handleBulkDelete = () => {
+    if (window.confirm(`Are you sure you want to delete ${selectedItems.length} items?`)) {
+      setProducts(products.filter(p => !selectedItems.includes(p.id)));
+      setSelectedItems([]);
+      addToast(`${selectedItems.length} products deleted successfully`, "success");
+    }
+  };
 
  const handleOpenModal = (product = null) => {
   if (product) {
@@ -66,9 +129,20 @@ const Products =() =>{
  <div className="space-y-6">
   <div className="flex flex-col md:flex-row justify-between items-center gap-4">
    <div className="relative w-full md:w-96">
+    <div className="flex items-center gap-2">
+    {selectedItems.length > 0 && (
+     <button onClick={handleBulkDelete} className="p-2 rounded-lg text-gray-500 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors flex items-center gap-2">
+      <Trash2 size={18} />
+      <span>Delete({selectedItems.length})</span>
+     </button>
+     )}
+
+    <div className="relative w-full">
     <Search className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400' size={20} />
     
     <input type="text" placeholder="Search products..." className="w-full pl-10 pr-4 py-2 rounded-xl bg-white/50 dark:bg-slate-800/50 border border-gray-200 dark:border-gray-700 outline-none focus:ring-2 focus:ring-amber-400/50 transition-all text-gray-700 dark:text-gray-200" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+   </div>
+   </div>
    </div>
 
    <div className="flex gap-3 w-full md:w-auto">
@@ -89,19 +163,43 @@ const Products =() =>{
    <div className="overflow-x-auto">
     <table className="w-full">
      <thead className='bg-gray-50/50 dark:bg-slate-800/50 border-b border-gray-200 dark:border-gray-700'>
-      <tr>
-       <th className='px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider'>Product</th>
-       <th className='px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider'>Category</th>
-       <th className='px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider'>Price</th>
-       <th className='px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider'>Stock</th>
-       <th className='px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider'>Status</th>
-       <th className='px-6 py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider'>Actions</th>
-      </tr>
+
+     <tr>
+     <th className="px-6 py-4">
+      <button onClick={toggleSelectAll} className="text-gray-400 hover:text-amber-500 transition-colors">
+       {selectedItems.length === paginatedProducts.length && paginatedProducts.length > 0 ? <CheckSquare size={20} className="text-amber-500" /> : <Square size={20} />}
+      </button>
+     </th>
+
+     {[
+      { key: 'name', label: 'Product' },
+      { key: 'category', label: 'Category' },
+      { key: 'price', label: 'Price' },
+      { key: 'stock', label: 'Stock' },
+      { key: 'status', label: 'Status' }
+      ].map((col) => (
+
+       <th key={col.key} className='px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-white/5 transition-colors' onClick={() => handleSort(col.key)}>
+       <div className="flex items-center gap-1">
+        {col.label}
+        <ArrowUpDown size={14} className={`transition-opacity ${sortConfig.key === col.key ? 'opacity-100 text-amber-500' : 'opacity-40'}`} />
+       </div>
+      </th>
+      ))}
+     <th className='px-6 py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider'>Actions</th>
+     </tr>
      </thead>
 
      <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
       {filteredProducts.map((product) => (
-       <tr key={product.id} className="'hover:bg-amber-50/50 dark:hover:bg-white/5 transition-colors">
+       <tr key={product.id} className={`hover:bg-amber-50/50 dark:hover:bg-white/5 transition-colors ${selectedItems.includes(product.id) ? 'bg-amber-50/30 dark:bg-amber-500/5' : ''}`}>
+
+        <td className="px-6 py-4">
+         <button onClick={() => toggleSelect(product.id)} className="text-gray-400 hover:text-amber-500 transition-colors">
+          {selectedItems.includes(product.id) ? <CheckSquare size={20} className="text-amber-500" /> : <Square size={20} />}
+         </button>
+        </td>
+
         <td className='px-6 py-4 whitespace-nowrap'>
          <div className='flex items-center gap-3'>
           <div className='h-10 w-10 rounded-lg bg-gray-200 dark:bg-slate-700 flex items-center justify-center text-xl'>🛍️
@@ -139,7 +237,23 @@ const Products =() =>{
      </tbody>
      </table>
     </div>
-    </GlassCard>
+
+    <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
+     <p className="text-sm text-gray-500 dark:text-gray-400">
+      Showing <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> to <span className="font-medium">{Math.min(currentPage * itemsPerPage, sortedProducts.length)}</span> of <span className="font-medium">{sortedProducts.length}</span> results
+     </p>
+
+    <div className="flex items-center gap-2">
+     <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage === 1} className="p-2 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+      <ChevronLeft size={18} />
+     </button>
+
+     <button onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages} className="p-2 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+      <ChevronRight size={18} />
+     </button>
+     </div>
+    </div>
+   </GlassCard>
     
     <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={editingProduct ? "Edit Product" : "Add New Product"}>
      <form onSubmit={handleSubmit} className="space-y-4">
